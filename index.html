@@ -1,0 +1,1150 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI智能财务处理系统</title>
+  <link rel="stylesheet" href="css/style.css?v=20260708-voucher-select-flow">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <section class="login-screen" id="loginScreen">
+    <div class="login-card">
+      <div class="login-brand">
+        <div class="brand-mark">AI</div>
+        <div>
+          <h1>FinSight AI</h1>
+          <p>AI智能财务处理系统身份认证</p>
+        </div>
+      </div>
+      <div class="login-form">
+        <label>
+          <span>登录角色</span>
+          <select id="loginRole">
+            <option value="cashier">出纳</option>
+            <option value="accountant">会计</option>
+            <option value="supervisor" selected>会计主管</option>
+          </select>
+        </label>
+        <label>
+          <span>用户名</span>
+          <input id="loginUsername" type="text" autocomplete="username" placeholder="请输入用户名">
+        </label>
+        <label>
+          <span>密码</span>
+          <input id="loginPassword" type="password" autocomplete="current-password" placeholder="请输入密码">
+        </label>
+        <button class="primary-btn" id="loginBtn">登录系统</button>
+        <p class="login-error" id="loginError"></p>
+      </div>
+      <div class="login-hints">
+        <strong>测试账号</strong>
+        <span>出纳 cashier / cashier123</span>
+        <span>会计 accountant / accountant123</span>
+        <span>会计主管 supervisor / supervisor123</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="app-shell" id="appShell">
+    <aside class="sidebar" id="sidebar">
+      <div class="brand">
+        <div class="brand-mark">AI</div>
+        <div>
+          <h1>FinSight AI</h1>
+          <p>智能财务信息化实训平台</p>
+        </div>
+      </div>
+
+      <nav class="nav-menu" aria-label="主导航">
+        <button class="nav-item active" data-page="dashboard" data-title="首页总览">
+          <span class="nav-icon">01</span><span>首页总览</span>
+        </button>
+        <button class="nav-item" data-page="audit" data-title="AI审核凭证">
+          <span class="nav-icon">02</span><span>AI审核凭证</span>
+        </button>
+        <button class="nav-item" data-page="entry" data-title="AI生成分录">
+          <span class="nav-icon">03</span><span>AI生成分录</span>
+        </button>
+        <button class="nav-item" data-page="voucherCenter" data-title="凭证查询">
+          <span class="nav-icon">04</span><span>凭证查询</span>
+        </button>
+        <button class="nav-item" data-page="ledger" data-title="账簿管理">
+          <span class="nav-icon">05</span><span>账簿管理</span>
+        </button>
+        <button class="nav-item" data-page="reports" data-title="财务报表">
+          <span class="nav-icon">06</span><span>财务报表</span>
+        </button>
+        <button class="nav-item" data-page="analysis" data-title="智能分析">
+          <span class="nav-icon">07</span><span>智能分析</span>
+        </button>
+        <button class="nav-item" data-page="settings" data-title="系统设置">
+          <span class="nav-icon">08</span><span>系统设置</span>
+        </button>
+      </nav>
+
+      <div class="sidebar-footer">
+        <p data-company-name>北京明帆股份有限公司</p>
+        <strong>财会信息化实训</strong>
+      </div>
+    </aside>
+
+    <div class="main-area">
+      <header class="topbar">
+        <button class="menu-toggle" id="menuToggle" aria-label="打开导航">☰</button>
+        <h2 id="pageTitle">首页总览</h2>
+        <div class="top-actions">
+          <label class="search-box">
+            <span>搜索</span>
+            <input id="globalSearch" type="search" placeholder="凭证号 / 科目 / 报表">
+          </label>
+          <button class="icon-button" id="themeToggle" aria-label="切换深色模式">☾</button>
+          <button class="icon-button notification" id="notificationBtn" aria-label="消息提醒">●</button>
+          <select class="role-select" id="roleSelect" aria-label="角色切换">
+            <option value="cashier">出纳</option>
+            <option value="accountant">会计</option>
+            <option value="supervisor" selected>会计主管</option>
+          </select>
+          <div class="user-profile">
+            <div class="avatar" id="roleAvatar">会</div>
+            <span id="roleName">会计主管</span>
+          </div>
+          <button class="secondary-btn logout-btn" id="logoutBtn">退出</button>
+        </div>
+      </header>
+
+      <main class="content">
+        <section class="page active" id="dashboard">
+          <div class="hero-panel">
+            <div class="hero-copy">
+              <p class="eyebrow">FinSight AI</p>
+              <h3>AI智能财务处理系统</h3>
+              <p>面向北京明帆股份有限公司实训业务，完成票据识别、凭证审核、分录生成、报表编制与财务诊断。</p>
+            </div>
+            <div class="hero-status">
+              <span>本月自动化处理率</span>
+              <strong>91.8%</strong>
+            </div>
+          </div>
+
+          <section class="card training-panel">
+            <div class="section-title">
+              <h3>实训任务中心</h3>
+              <span>仿真实训平台流程</span>
+            </div>
+            <div class="training-grid">
+              <div><span>当前企业</span><strong data-company-name>北京明帆股份有限公司</strong></div>
+              <div><span>当前角色</span><strong id="dashboardRole">会计主管</strong></div>
+              <div><span>任务类型</span><strong>财务处理与报表分析</strong></div>
+              <div><span>完成进度</span><strong id="taskProgress">72%</strong></div>
+            </div>
+            <div class="progress-track"><span id="progressBar"></span></div>
+            <div class="button-row">
+              <button class="primary-btn" id="startTaskBtn">开始实训</button>
+              <button class="secondary-btn" id="saveProgressBtn">保存进度</button>
+              <button class="secondary-btn" id="submitTaskBtn">提交结果</button>
+              <button class="secondary-btn" id="helpBtn">查看帮助</button>
+            </div>
+          </section>
+
+          <section class="card closed-loop-card">
+            <div class="section-title">
+              <h3>北京明帆实训业务闭环</h3>
+              <span>从原始凭证到财务分析</span>
+            </div>
+            <div class="loop-flow">
+              <div>原始凭证</div>
+              <div>AI识别</div>
+              <div>凭证审核</div>
+              <div>生成分录</div>
+              <div>试算平衡</div>
+              <div>生成报表</div>
+              <div>财务分析</div>
+            </div>
+          </section>
+
+          <section class="card highlights-card">
+            <div class="section-title">
+              <h3>本系统亮点</h3>
+              <span>AI赋能财会实训</span>
+            </div>
+            <div class="highlight-grid">
+              <div>AI自动识别票据信息</div>
+              <div>自动审核凭证完整性</div>
+              <div>自动生成会计分录</div>
+              <div>自动试算平衡</div>
+              <div>自动生成三大报表</div>
+              <div>自动输出财务分析报告</div>
+            </div>
+          </section>
+
+          <section class="card achievement-card">
+            <div class="section-title">
+              <h3>实训成果展示</h3>
+              <span>课程作品核心成果</span>
+            </div>
+            <div class="achievement-grid">
+              <div><span>完成凭证</span><strong>97张</strong></div>
+              <div><span>已审核凭证</span><strong>97张</strong></div>
+              <div><span>已生成账簿</span><strong>5类</strong></div>
+              <div><span>已生成报表</span><strong>3张</strong></div>
+              <div><span>AI识别准确率</span><strong>92%</strong></div>
+              <div><span>异常风险</span><strong>5项</strong></div>
+            </div>
+          </section>
+
+          <section class="card value-card">
+            <div class="section-title">
+              <h3>系统价值总结</h3>
+              <span>财会信息化实训 + AI赋能财务</span>
+            </div>
+            <div class="value-list">
+              <span>提高凭证审核效率</span>
+              <span>降低科目选择错误</span>
+              <span>强化附件完整性控制</span>
+              <span>支持报表自动生成</span>
+              <span>提升财务信息化水平</span>
+            </div>
+          </section>
+
+          <div class="metric-grid">
+            <article class="metric-card">
+              <div class="metric-icon blue">审</div>
+              <div>
+                <p>待审核凭证</p>
+                <strong>18</strong>
+                <span class="tag warning">同比 +6.2%</span>
+              </div>
+            </article>
+            <article class="metric-card">
+              <div class="metric-icon cyan">分</div>
+              <div>
+                <p>已生成分录</p>
+                <strong>96</strong>
+                <span class="tag success">同比 +18.5%</span>
+              </div>
+            </article>
+            <article class="metric-card">
+              <div class="metric-icon green">表</div>
+              <div>
+                <p>已生成报表</p>
+                <strong>3</strong>
+                <span class="tag success">准时率 100%</span>
+              </div>
+            </article>
+            <article class="metric-card">
+              <div class="metric-icon red">险</div>
+              <div>
+                <p>风险预警</p>
+                <strong>5</strong>
+                <span class="tag danger">需复核 2项</span>
+              </div>
+            </article>
+          </div>
+
+          <div class="dashboard-middle">
+            <section class="card process-card">
+              <div class="section-title">
+                <h3>业务流程图</h3>
+                <span>端到端自动化</span>
+              </div>
+              <div class="process-flow">
+                <div class="flow-step">上传附件</div>
+                <div class="flow-step">AI识别</div>
+                <div class="flow-step">凭证审核</div>
+                <div class="flow-step">生成分录</div>
+                <div class="flow-step">人工确认</div>
+                <div class="flow-step">生成报表</div>
+              </div>
+            </section>
+
+            <section class="card gauge-card">
+              <div class="section-title">
+                <h3>AI审核通过率</h3>
+                <span>本月</span>
+              </div>
+              <div class="gauge">
+                <div class="gauge-ring" style="--rate: 92;">
+                  <span>92%</span>
+                </div>
+                <p>凭证识别准确率稳定，低风险业务可自动入账。</p>
+              </div>
+            </section>
+          </div>
+
+          <div class="lower-grid">
+            <section class="card">
+              <div class="section-title">
+                <h3>最近处理记录</h3>
+                <span>实时更新</span>
+              </div>
+              <div class="table-wrap">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>时间</th>
+                      <th>业务类型</th>
+                      <th>处理结果</th>
+                      <th>风险等级</th>
+                      <th>操作人</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr><td>09:18</td><td>费用报销</td><td>已生成分录</td><td><span class="pill low">低</span></td><td>会计主管</td></tr>
+                    <tr><td>10:06</td><td>采购入库</td><td>需补充合同</td><td><span class="pill mid">中</span></td><td>王会计</td></tr>
+                    <tr><td>11:22</td><td>销售收款</td><td>审核通过</td><td><span class="pill low">低</span></td><td>李出纳</td></tr>
+                    <tr><td>14:35</td><td>固定资产</td><td>折旧已计提</td><td><span class="pill low">低</span></td><td>系统自动</td></tr>
+                    <tr><td>15:12</td><td>供应商付款</td><td>需人工复核</td><td><span class="pill high">高</span></td><td>会计主管</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </section>
+
+            <section class="card risk-list">
+              <div class="section-title">
+                <h3>风险提醒列表</h3>
+                <span>5项</span>
+              </div>
+              <ul>
+                <li><strong>重复发票风险</strong><span>发票号码 031982 存在相似记录</span></li>
+                <li><strong>附件缺失</strong><span>采购业务未上传验收入库单</span></li>
+                <li><strong>科目异常</strong><span>培训费疑似误计入管理费用</span></li>
+                <li><strong>金额偏差</strong><span>银行回单与发票含税金额不一致</span></li>
+              </ul>
+            </section>
+          </div>
+        </section>
+
+        <section class="page" id="audit">
+          <div class="two-column">
+            <section class="card">
+              <div class="section-title">
+                <h3>附件上传区</h3>
+                <span>支持拖拽上传</span>
+              </div>
+              <div class="button-row compact sample-ticket-row">
+                <button class="secondary-btn sample-ticket-btn" data-sample="发票">加载发票</button>
+                <button class="secondary-btn sample-ticket-btn" data-sample="银行回单">加载银行回单</button>
+                <button class="secondary-btn sample-ticket-btn" data-sample="报销单">加载报销单</button>
+                <button class="secondary-btn sample-ticket-btn" data-sample="合同">加载合同</button>
+              </div>
+              <div class="upload-grid">
+                <label class="upload-box" data-upload-type="发票">
+                  <input type="file" accept=".pdf,.jpg,.jpeg,.png">
+                  <strong>上传发票</strong><span>PDF / JPG / PNG</span>
+                </label>
+                <label class="upload-box" data-upload-type="银行回单">
+                  <input type="file" accept=".pdf,.jpg,.jpeg,.png">
+                  <strong>上传银行回单</strong><span>PDF / JPG / PNG</span>
+                </label>
+                <label class="upload-box" data-upload-type="报销单">
+                  <input type="file" accept=".xls,.xlsx,.pdf">
+                  <strong>上传报销单</strong><span>Excel / PDF</span>
+                </label>
+                <label class="upload-box" data-upload-type="合同">
+                  <input type="file" accept=".pdf,.doc,.docx">
+                  <strong>上传合同</strong><span>PDF / Word</span>
+                </label>
+              </div>
+              <div class="file-list" id="fileList">
+                <span>尚未上传附件</span>
+              </div>
+              <div class="ticket-preview-grid" id="ticketPreviewGrid"></div>
+            </section>
+
+            <section class="card">
+              <div class="section-title">
+                <h3>AI识别结果</h3>
+                <span>OCR + 规则校验</span>
+              </div>
+              <div class="info-list">
+                <div><span>业务日期</span><strong id="recognizedDate">2022-12-25</strong></div>
+                <div><span>交易对象</span><strong id="recognizedParty">北京智培科技有限公司</strong></div>
+                <div><span>金额</span><strong id="recognizedAmount">874.50 元</strong></div>
+                <div><span>税率</span><strong id="recognizedTaxRate">6%</strong></div>
+                <div><span>发票号码</span><strong id="recognizedInvoice">03198245</strong></div>
+                <div><span>是否重复</span><strong id="recognizedDuplicate" class="text-success">否</strong></div>
+                <div><span>附件完整性</span><strong id="recognizedCompleteness" class="text-warning">缺少审批流截图</strong></div>
+                <div><span>风险等级</span><strong id="recognizedRisk" class="text-warning">中风险</strong></div>
+              </div>
+              <div class="match-panel">
+                <div class="section-title">
+                  <h3>四单匹配审核</h3>
+                  <span id="matchStatus" class="tag warning">待匹配</span>
+                </div>
+                <div class="table-wrap dense-table match-table-wrap">
+                  <table class="match-table">
+                    <thead><tr><th>审核项目</th><th>发票</th><th>银行回单</th><th>报销单</th><th>合同</th><th>结果</th></tr></thead>
+                    <tbody id="matchRows"></tbody>
+                  </table>
+                </div>
+                <p id="matchMessage" class="match-message warning">请上传银行回单、增值税专用发票、报销单和合同后进行匹配。</p>
+              </div>
+              <div class="button-row">
+                <button class="primary-btn action-btn" data-action="audit">AI审核</button>
+                <button class="secondary-btn" id="recognizeAgainBtn">重新识别</button>
+                <button class="secondary-btn" id="auditReportBtn">生成审核报告</button>
+              </div>
+            </section>
+          </div>
+
+          <section class="card result-card hidden" id="auditResult">
+            <div class="section-title">
+              <h3>审核结果卡片</h3>
+              <span class="tag success">模拟结果</span>
+            </div>
+            <div class="result-grid">
+              <div><span>审核状态</span><strong>需人工复核</strong></div>
+              <div><span>风险说明</span><strong>附件链条基本完整，但审批流截图缺失。</strong></div>
+              <div><span>修改建议</span><strong>补充部门负责人审批记录后，可确认入账。</strong></div>
+              <div><span>附件完整性</span><strong id="scoreCompleteness">85分</strong></div>
+              <div><span>金额一致性</span><strong id="scoreAmount">100分</strong></div>
+              <div><span>税率合规性</span><strong id="scoreTax">100分</strong></div>
+              <div><span>交易对象一致性</span><strong id="scoreBusiness">90分</strong></div>
+              <div><span>综合评分</span><strong id="scoreTotal">94分</strong></div>
+              <div><span>综合风险等级</span><strong id="scoreRisk" class="text-warning">中</strong></div>
+            </div>
+          </section>
+        </section>
+
+        <section class="page" id="entry">
+          <section class="card entry-panel">
+            <div class="section-title">
+              <h3>业务描述输入</h3>
+              <span>自然语言生成会计分录</span>
+            </div>
+            <div class="entry-type-row">
+              <label>
+                <span>业务类型选择</span>
+                <select id="businessTypeSelect">
+                  <option>销售收款</option>
+                  <option>采购付款</option>
+                  <option>费用报销</option>
+                  <option>固定资产</option>
+                  <option>工资薪酬</option>
+                  <option>投资业务</option>
+                  <option>月末结转</option>
+                </select>
+              </label>
+            </div>
+            <textarea id="businessInput">2022年12月25日支付员工培训费，取得增值税专用发票，价税合计874.50元，其中不含税金额825元，进项税额49.50元，以库存现金支付。</textarea>
+            <div class="button-row">
+              <button class="primary-btn action-btn" data-action="entry">AI生成分录</button>
+              <button class="secondary-btn" id="entryAuditBtn">AI分录审核</button>
+              <button class="secondary-btn" id="clearEntry">清空</button>
+              <button class="secondary-btn" id="exportWordBtn">导出Word</button>
+              <button class="secondary-btn" id="exportExcelBtn">导出Excel</button>
+            </div>
+          </section>
+
+          <section class="card case-library">
+            <div class="section-title">
+              <h3>北京明帆实训案例库</h3>
+              <span>点击后自动填入并生成分录</span>
+            </div>
+            <div class="case-grid">
+              <button class="secondary-btn case-btn" data-case="ad">支付广告费</button>
+              <button class="secondary-btn case-btn" data-case="materialDraft">采购材料，银行汇票付款</button>
+              <button class="secondary-btn case-btn" data-case="assetSale">出售固定资产</button>
+              <button class="secondary-btn case-btn" data-case="electricity">支付并分摊电费</button>
+              <button class="secondary-btn case-btn" data-case="training">支付员工培训费</button>
+              <button class="secondary-btn case-btn" data-case="stockSale">出售股票</button>
+              <button class="secondary-btn case-btn" data-case="saleCash">销售商品，货款已收</button>
+              <button class="secondary-btn case-btn" data-case="saleCredit">销售商品，货款未收</button>
+              <button class="secondary-btn case-btn" data-case="repair">支付设备维修费</button>
+              <button class="secondary-btn case-btn" data-case="depreciation">计提固定资产折旧</button>
+              <button class="secondary-btn case-btn" data-case="interest">收到银行存款利息</button>
+              <button class="secondary-btn case-btn" data-case="badDebt">计提坏账准备</button>
+            </div>
+          </section>
+
+          <section class="card ai-steps-card">
+            <div class="section-title">
+              <h3>AI处理步骤</h3>
+              <span>从业务描述进入账簿与报表流程</span>
+            </div>
+            <div class="ai-step-grid" id="aiStepGrid">
+              <div><strong>✓</strong><span>识别业务类型</span></div>
+              <div><strong>✓</strong><span>提取金额与税率</span></div>
+              <div><strong>✓</strong><span>匹配会计科目</span></div>
+              <div><strong>✓</strong><span>生成借贷分录</span></div>
+              <div><strong>✓</strong><span>检查借贷平衡</span></div>
+              <div><strong>✓</strong><span>输出现金流量项目建议</span></div>
+            </div>
+            <p class="ledger-write-notice" id="ledgerWriteNotice">生成分录后，数据将写入统一模拟账簿，并联动科目余额表、三大报表和智能分析。</p>
+          </section>
+
+          <div class="two-column entry-result-grid">
+            <section class="card">
+              <div class="section-title">
+                <h3>记账凭证</h3>
+                <span id="voucherNo">凭证编号：AI-20221225-006</span>
+              </div>
+              <div class="table-wrap">
+                <table class="voucher-table">
+                  <thead>
+                    <tr>
+                      <th>摘要</th>
+                      <th>会计科目</th>
+                      <th>借方金额</th>
+                      <th>贷方金额</th>
+                    </tr>
+                  </thead>
+                  <tbody id="voucherRows">
+                    <tr><td>支付员工培训费</td><td>应付职工薪酬--职工教育经费</td><td>825.00</td><td></td></tr>
+                    <tr><td>进项税额</td><td>应交税费--应交增值税（进项税额）</td><td>49.50</td><td></td></tr>
+                    <tr><td>现金支付</td><td>库存现金</td><td></td><td>874.50</td></tr>
+                  </tbody>
+                  <tfoot>
+                    <tr><td colspan="2">合计</td><td id="debitTotal">874.50</td><td id="creditTotal">874.50</td></tr>
+                  </tfoot>
+                </table>
+              </div>
+              <div class="trial-balance">
+                <div><span>借方合计</span><strong id="trialDebit">874.50</strong></div>
+                <div><span>贷方合计</span><strong id="trialCredit">874.50</strong></div>
+                <div><span>差额</span><strong id="trialDiff">0.00</strong></div>
+                <div><span>状态</span><strong id="trialStatus" class="text-success">试算平衡通过</strong></div>
+              </div>
+            </section>
+
+            <aside class="card ai-explain">
+              <div class="section-title">
+                <h3>AI解释</h3>
+                <span>会计处理依据</span>
+              </div>
+              <ul id="aiExplainList">
+                <li>员工培训费与职工能力提升直接相关，计入“应付职工薪酬--职工教育经费”。</li>
+                <li>取得增值税专用发票且用于可抵扣项目，进项税额 49.50 元可以抵扣。</li>
+                <li>付款方式为库存现金，贷记“库存现金”，现金流量项目建议列入“支付给职工以及为职工支付的现金”。</li>
+              </ul>
+            </aside>
+          </div>
+
+          <div class="two-column entry-result-grid">
+            <section class="card cashflow-suggestion-card">
+              <div class="section-title">
+                <h3>现金流量项目建议</h3>
+                <span>与会计分录分开展示</span>
+              </div>
+              <p id="cashflowSuggestion">支付给职工以及为职工支付的现金</p>
+            </section>
+            <section class="card entry-audit-card">
+              <div class="section-title">
+                <h3>AI分录审核评分</h3>
+                <span id="entryAuditStatus" class="tag warning">待审核</span>
+              </div>
+              <div class="entry-score-grid">
+                <div><span>科目准确性</span><strong id="subjectScore">--</strong></div>
+                <div><span>金额准确性</span><strong id="amountScore">--</strong></div>
+                <div><span>附件完整性</span><strong id="entryAttachScore">--</strong></div>
+                <div><span>综合评分</span><strong id="entryTotalScore">--</strong></div>
+              </div>
+            </section>
+          </div>
+        </section>
+
+        <section class="page" id="voucherCenter">
+          <section class="card workbench-card">
+            <div class="section-title">
+              <h3>凭证查询工作台</h3>
+              <span>按期间、科目、状态检索凭证流水</span>
+            </div>
+            <div class="filter-bar">
+              <label>
+                <span>会计期间</span>
+                <select id="voucherPeriodFilter">
+                  <option value="全部">全部期间</option>
+                  <option value="2022年12月" selected>2022年12月</option>
+                  <option value="2023年1月">2023年1月</option>
+                </select>
+              </label>
+              <label>
+                <span>会计科目</span>
+                <select id="voucherSubjectFilter">
+                  <option value="全部">全部科目</option>
+                  <option value="银行存款">银行存款</option>
+                  <option value="主营业务收入">主营业务收入</option>
+                  <option value="应交税费">应交税费</option>
+                  <option value="销售费用">销售费用</option>
+                  <option value="管理费用">管理费用</option>
+                </select>
+              </label>
+              <label>
+                <span>凭证状态</span>
+                <select id="voucherStatusFilter">
+                  <option value="全部">全部状态</option>
+                  <option value="已过账">已过账</option>
+                  <option value="待审核">待审核</option>
+                  <option value="待签字">待签字</option>
+                </select>
+              </label>
+              <label>
+                <span>风险等级</span>
+                <select id="voucherRiskFilter">
+                  <option value="全部">全部风险</option>
+                  <option value="低">低风险</option>
+                  <option value="中">中风险</option>
+                  <option value="高">高风险</option>
+                </select>
+              </label>
+              <button class="primary-btn" id="voucherSearchBtn">查询凭证</button>
+              <button class="secondary-btn" id="voucherResetBtn">重置</button>
+            </div>
+            <div class="voucher-summary-strip">
+              <div><span>本期凭证</span><strong id="voucherCount">12</strong></div>
+              <div><span>借方发生额</span><strong id="voucherDebitSum">0.00</strong></div>
+              <div><span>贷方发生额</span><strong id="voucherCreditSum">0.00</strong></div>
+              <div><span>状态</span><strong id="voucherBalanceStatus" class="text-success">借贷平衡</strong></div>
+            </div>
+            <div class="voucher-batch-bar">
+              <div><span>已选择凭证</span><strong id="selectedVoucherCount">0张</strong></div>
+              <button class="secondary-btn" id="batchCashierSignBtn">对选中凭证出纳签字</button>
+              <button class="secondary-btn" id="batchSupervisorAuditBtn">对选中凭证主管审核</button>
+              <button class="secondary-btn" id="batchPostBtn">对选中凭证过账</button>
+            </div>
+            <div class="table-wrap dense-table">
+              <table>
+                <thead>
+                  <tr>
+                    <th><input type="checkbox" id="selectAllVouchers" aria-label="全选凭证"></th>
+                    <th>日期</th>
+                    <th>凭证号</th>
+                    <th>摘要</th>
+                    <th>会计科目</th>
+                    <th>借方金额</th>
+                    <th>贷方金额</th>
+                    <th>签字</th>
+                    <th>审核</th>
+                    <th>过账</th>
+                    <th>风险</th>
+                    <th>操作</th>
+                  </tr>
+                </thead>
+                <tbody id="voucherQueryRows"></tbody>
+              </table>
+            </div>
+          </section>
+
+          <section class="card correction-center">
+            <div class="section-title">
+              <h3>凭证更正中心</h3>
+              <span>按审核、过账、结账状态控制修改路径</span>
+            </div>
+            <p class="correction-note">本系统对未审核凭证支持重新识别与重新生成分录；对已审核或已过账凭证不允许直接修改，需通过主管退回、红字冲销或更正分录完成修正，保证账簿数据可追溯。</p>
+
+            <div class="selected-voucher-panel" id="selectedVoucherPanel">
+              <div><span>当前选择凭证</span><strong id="selectedVoucherNo">未选择</strong></div>
+              <div><span>凭证摘要</span><strong id="selectedVoucherSummary">请先在上方凭证查询表格点击“更正”</strong></div>
+              <div><span>凭证状态</span><strong id="selectedVoucherStatus" class="text-warning">待选择</strong></div>
+              <div><span>推荐处理方式</span><strong id="selectedCorrectionAdvice">选择凭证后自动判断</strong></div>
+            </div>
+
+            <div class="correction-rule-grid">
+              <div><strong>未审核凭证</strong><span>允许重新识别、重新生成分录、保存修改。</span></div>
+              <div><strong>已审核未过账凭证</strong><span>不允许直接修改，必须由会计主管退回审核后再修改。</span></div>
+              <div><strong>已过账凭证</strong><span>不允许直接修改原凭证，应红字冲销后重录，或编制更正分录。</span></div>
+              <div><strong>已结账期间凭证</strong><span>不允许直接修改，需先反结账，再按权限进行处理。</span></div>
+            </div>
+
+            <div class="button-row correction-actions">
+              <button class="secondary-btn correction-btn" data-correction="recognize">重新识别</button>
+              <button class="secondary-btn correction-btn" data-correction="regenerate">重新生成分录</button>
+              <button class="secondary-btn correction-btn" data-correction="return">主管退回</button>
+              <button class="secondary-btn correction-btn" data-correction="red">生成红字冲销凭证</button>
+              <button class="secondary-btn correction-btn" data-correction="correct">生成正确凭证</button>
+              <button class="secondary-btn correction-btn" data-correction="adjust">生成更正分录</button>
+              <button class="secondary-btn correction-btn" data-correction="repost">重新过账</button>
+              <button class="primary-btn correction-btn" data-correction="report">重新生成报表</button>
+            </div>
+
+            <div class="correction-layout">
+              <div class="correction-block">
+                <div class="section-title compact-title">
+                  <h3>原错误凭证</h3>
+                  <span class="tag danger">已过账，不可直接修改</span>
+                </div>
+                <table class="correction-table">
+                  <thead><tr><th>方向</th><th>会计科目</th><th>金额</th></tr></thead>
+                  <tbody>
+                    <tr><td>借</td><td>管理费用--广告费</td><td>12,000.00</td></tr>
+                    <tr><td>借</td><td>应交税费--应交增值税（进项税额）</td><td>720.00</td></tr>
+                    <tr><td>贷</td><td>银行存款</td><td>12,720.00</td></tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div class="correction-block diagnosis-block">
+                <div class="section-title compact-title">
+                  <h3>AI错误诊断</h3>
+                  <span class="tag warning">科目归类错误</span>
+                </div>
+                <p>该业务属于产品推广活动，应计入<strong>销售费用--广告宣传费</strong>，不应计入<strong>管理费用--广告费</strong>。税额和银行付款金额正确，本次更正只影响费用结构，不改变利润总额。</p>
+              </div>
+            </div>
+
+            <div class="correction-plan-grid">
+              <div class="plan-card">
+                <strong>方案一：红字冲销 + 正确凭证</strong>
+                <span>适用于已过账凭证错误，需要完整保留原凭证、更正凭证和重新入账凭证的审计链条。</span>
+              </div>
+              <div class="plan-card">
+                <strong>方案二：更正分录</strong>
+                <span>适用于借贷金额正确、仅科目归类错误的情况，通过费用科目内部调整完成更正。</span>
+              </div>
+            </div>
+
+            <div class="correction-result-grid">
+              <div class="correction-result hidden" id="redVoucherResult">
+                <h4>红字冲销原凭证</h4>
+                <table class="correction-table">
+                  <tbody>
+                    <tr><td>借</td><td>管理费用--广告费</td><td>-12,000.00</td></tr>
+                    <tr><td>借</td><td>应交税费--应交增值税（进项税额）</td><td>-720.00</td></tr>
+                    <tr><td>贷</td><td>银行存款</td><td>-12,720.00</td></tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="correction-result hidden" id="correctVoucherResult">
+                <h4>重新录入正确凭证</h4>
+                <table class="correction-table">
+                  <tbody>
+                    <tr><td>借</td><td>销售费用--广告宣传费</td><td>12,000.00</td></tr>
+                    <tr><td>借</td><td>应交税费--应交增值税（进项税额）</td><td>720.00</td></tr>
+                    <tr><td>贷</td><td>银行存款</td><td>12,720.00</td></tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="correction-result hidden" id="adjustVoucherResult">
+                <h4>更正分录</h4>
+                <table class="correction-table">
+                  <tbody>
+                    <tr><td>借</td><td>销售费用--广告宣传费</td><td>12,000.00</td></tr>
+                    <tr><td>贷</td><td>管理费用--广告费</td><td>12,000.00</td></tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="correction-result hidden" id="reportUpdateResult">
+                <h4>重新生成报表结果</h4>
+                <ul>
+                  <li>科目余额已更新</li>
+                  <li>利润表已更新</li>
+                  <li>智能分析指标已更新</li>
+                  <li>勾稽关系校验通过</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="correction-impact">
+              <h4>更新后影响</h4>
+              <div class="impact-grid">
+                <div><span>管理费用减少</span><strong>12,000.00</strong></div>
+                <div><span>销售费用增加</span><strong>12,000.00</strong></div>
+                <div><span>利润总额</span><strong>不变</strong></div>
+                <div><span>利润表费用结构</span><strong>更准确</strong></div>
+                <div><span>审计追踪</span><strong>记录已生成</strong></div>
+              </div>
+            </div>
+
+            <div class="audit-log-box">
+              <h4>更正日志与审计痕迹</h4>
+              <ul id="correctionLog">
+                <li>系统已识别错误凭证：原凭证已过账，不允许直接修改。</li>
+              </ul>
+            </div>
+
+            <div class="data-recalc-center">
+              <div class="section-title">
+                <h3>数据更新与重算中心</h3>
+                <span>更正后自动联动凭证、账簿、报表与分析</span>
+              </div>
+              <p class="correction-note">当凭证修改后，系统自动重新计算：凭证汇总、科目发生额、科目余额表、试算平衡表、资产负债表、利润表、现金流量表和智能分析指标。</p>
+              <div class="button-row">
+                <button class="primary-btn" id="recalcDataBtn">重新计算数据</button>
+              </div>
+
+              <div class="recalc-steps" id="recalcSteps">
+                <div><strong>1</strong><span>正在读取更正凭证</span></div>
+                <div><strong>2</strong><span>正在重新汇总科目发生额</span></div>
+                <div><strong>3</strong><span>正在更新科目余额表</span></div>
+                <div><strong>4</strong><span>正在进行试算平衡</span></div>
+                <div><strong>5</strong><span>正在重新生成资产负债表</span></div>
+                <div><strong>6</strong><span>正在重新生成利润表</span></div>
+                <div><strong>7</strong><span>正在重新生成现金流量表</span></div>
+                <div><strong>8</strong><span>正在更新智能分析指标</span></div>
+                <div><strong>9</strong><span>数据更新完成</span></div>
+              </div>
+
+              <div class="section-title compact-title">
+                <h3>更新前后对比</h3>
+                <span id="recalcCompareStatus" class="tag warning">待重算</span>
+              </div>
+              <div class="table-wrap dense-table">
+                <table>
+                  <thead><tr><th>项目</th><th>修改前</th><th>修改后</th><th>差异</th><th>影响说明</th></tr></thead>
+                  <tbody id="recalcCompareRows">
+                    <tr><td>销售费用</td><td>144,425.56</td><td>156,425.56</td><td>+12,000.00</td><td>广告费更正后计入销售费用，影响利润表期间费用。</td></tr>
+                    <tr><td>管理费用</td><td>288,600.00</td><td>276,600.00</td><td>-12,000.00</td><td>原错误计入管理费用的广告费已转出。</td></tr>
+                    <tr><td>净利润</td><td>-304,406.51</td><td>-292,406.51</td><td>+12,000.00</td><td>费用重分类后利润表结构更准确。</td></tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div class="recalc-grid">
+                <div>
+                  <div class="section-title compact-title">
+                    <h3>数据版本记录</h3>
+                    <span>自动递增</span>
+                  </div>
+                  <div class="table-wrap dense-table">
+                    <table>
+                      <thead><tr><th>版本号</th><th>更新时间</th><th>更新原因</th><th>操作人</th><th>是否通过校验</th></tr></thead>
+                      <tbody id="dataVersionRows">
+                        <tr><td>V1.0</td><td>09:00</td><td>初始录入版本</td><td>系统</td><td><span class="pill low">通过</span></td></tr>
+                        <tr><td>V1.1</td><td>09:18</td><td>更正广告费科目</td><td>会计主管</td><td><span class="pill low">通过</span></td></tr>
+                        <tr><td>V1.2</td><td>09:26</td><td>更正现金流量项目</td><td>会计</td><td><span class="pill low">通过</span></td></tr>
+                        <tr><td>V1.3</td><td>09:35</td><td>重新生成报表</td><td>会计主管</td><td><span class="pill low">通过</span></td></tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+
+                <div class="recalc-check-card">
+                  <div class="section-title compact-title">
+                    <h3>勾稽校验结果</h3>
+                    <span id="recalcCheckStatus" class="tag warning">待校验</span>
+                  </div>
+                  <div class="recalc-check-list" id="recalcCheckList">
+                    <p><span class="status-dot pending">!</span> 借方合计 = 贷方合计：待校验</p>
+                    <p><span class="status-dot pending">!</span> 资产总计 = 负债和所有者权益总计：待校验</p>
+                    <p><span class="status-dot pending">!</span> 利润表净利润已同步智能分析：待校验</p>
+                    <p><span class="status-dot pending">!</span> 现金流量表期末现金已同步资产负债表货币资金：待校验</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section class="card document-stage">
+            <div class="section-title">
+              <h3>凭证附件预览</h3>
+              <span>不同于原平台，本系统以AI识别字段和附件清单方式展示</span>
+            </div>
+            <div class="document-tabs">
+              <button class="document-tab active" data-doc="invoice">增值税专用发票</button>
+              <button class="document-tab" data-doc="bank">银行回单</button>
+              <button class="document-tab" data-doc="contract">合同</button>
+              <button class="document-tab" data-doc="expense">报销单</button>
+            </div>
+            <div class="document-preview" id="documentPreview">
+              <div class="doc-paper">
+                <span class="doc-badge">AI识别</span>
+                <h4>增值税专用发票</h4>
+                <p>发票号码：1100225623</p>
+                <p>购买方：<span data-company-name>北京明帆股份有限公司</span></p>
+                <p>价税合计：6,678.00 元</p>
+                <p>进项税额：378.00 元，可抵扣</p>
+              </div>
+              <div class="doc-insight">
+                <strong>校验结论</strong>
+                <p>发票金额、银行回单金额、合同金额与报销单金额一致，附件链条完整，可进入主管审核过账。</p>
+              </div>
+            </div>
+          </section>
+        </section>
+
+        <section class="page" id="ledger">
+          <section class="card ledger-card">
+            <div class="section-title">
+              <h3>账簿管理</h3>
+              <span>总账、明细账、科目余额与结账记录</span>
+            </div>
+            <div class="ledger-tabs">
+              <button class="ledger-tab active" data-ledger="general">总账</button>
+              <button class="ledger-tab" data-ledger="detail">三栏式明细账</button>
+              <button class="ledger-tab" data-ledger="balance">科目余额表</button>
+              <button class="ledger-tab" data-ledger="trial">试算平衡表</button>
+              <button class="ledger-tab" data-ledger="close">结账记录</button>
+            </div>
+            <div class="ledger-toolbar">
+              <label>
+                <span>期间</span>
+                <select id="ledgerPeriod">
+                  <option>2022年12月</option>
+                  <option>2023年1月</option>
+                </select>
+              </label>
+              <label>
+                <span>科目</span>
+                <select id="ledgerSubject">
+                  <option>全部科目</option>
+                  <option>银行存款</option>
+                  <option>主营业务收入</option>
+                  <option>应交税费</option>
+                  <option>销售费用</option>
+                </select>
+              </label>
+              <button class="primary-btn" id="ledgerRefreshBtn">刷新账簿</button>
+              <button class="secondary-btn" id="ledgerExportBtn">导出账簿</button>
+            </div>
+            <div class="trial-balance ledger-trial-summary">
+              <div><span>借方发生额合计</span><strong id="ledgerTrialDebit">0.00</strong></div>
+              <div><span>贷方发生额合计</span><strong id="ledgerTrialCredit">0.00</strong></div>
+              <div><span>差额</span><strong id="ledgerTrialDiff">0.00</strong></div>
+              <div><span>结果</span><strong id="ledgerTrialStatus" class="text-success">试算平衡通过</strong></div>
+            </div>
+            <div class="table-wrap dense-table">
+              <table>
+                <thead id="ledgerHead"></thead>
+                <tbody id="ledgerRows"></tbody>
+              </table>
+            </div>
+          </section>
+        </section>
+
+        <section class="page" id="reports">
+          <section class="card period-workflow-card">
+            <div class="section-title">
+              <h3>期末处理与岗位流转</h3>
+              <span>出纳签字 → 主管审核过账 → 会计结转损益 → 主管结账生成报表</span>
+            </div>
+            <div class="period-flow">
+              <div class="period-step" id="cashierSignStep">
+                <span>01 出纳签字</span>
+                <strong id="cashierSignStatus">待签字</strong>
+                <p>确认银行回单、现金付款和附件收付记录真实完整。</p>
+              </div>
+              <div class="period-step" id="postingStep">
+                <span>02 主管审核过账</span>
+                <strong id="postingStatus">待过账</strong>
+                <p>会计主管复核凭证、附件和试算平衡后登记入账。</p>
+              </div>
+              <div class="period-step" id="profitCloseStep">
+                <span>03 会计结转损益</span>
+                <strong id="profitCloseStatus">待结转</strong>
+                <p>将收入、成本、费用类科目结转至本年利润。</p>
+              </div>
+              <div class="period-step" id="periodCloseStep">
+                <span>04 主管结账生成报表</span>
+                <strong id="periodCloseStatus">待结账</strong>
+                <p>锁定本期凭证数据，生成资产负债表、利润表和现金流量表。</p>
+              </div>
+            </div>
+            <div class="button-row">
+              <button class="primary-btn workflow-btn" data-workflow="cashierSign">出纳签字</button>
+              <button class="secondary-btn workflow-btn" data-workflow="post">主管审核过账</button>
+              <button class="secondary-btn workflow-btn" data-workflow="closeProfit">会计结转损益</button>
+              <button class="secondary-btn workflow-btn" data-workflow="closePeriod">主管结账生成报表</button>
+            </div>
+            <p class="workflow-message" id="workflowMessage">当前状态：请先由出纳完成签字确认。</p>
+          </section>
+
+          <section class="card report-panel">
+            <div class="report-toolbar">
+              <div class="tabs">
+                <button class="tab active" data-report="balance">资产负债表</button>
+                <button class="tab" data-report="profit">利润表</button>
+                <button class="tab" data-report="cashflow">现金流量表</button>
+              </div>
+              <div class="button-row compact">
+                <button class="primary-btn action-btn" data-action="report">生成报表</button>
+                <button class="secondary-btn" id="downloadReportExcelBtn">下载Excel</button>
+                <button class="secondary-btn" id="downloadPdfBtn">下载PDF</button>
+                <button class="secondary-btn" id="printBtn">打印</button>
+              </div>
+            </div>
+
+            <div class="report-meta">
+              <span>编制单位：<span data-company-name>北京明帆股份有限公司</span></span>
+              <span>期间：<span id="reportPeriod">2022年12月</span></span>
+              <span>单位：元</span>
+            </div>
+
+            <div class="report-layout">
+              <div class="table-wrap">
+                <table class="financial-table active" id="balanceReport">
+                  <thead><tr><th>资产项目</th><th>期末余额</th><th>负债和所有者权益项目</th><th>期末余额</th></tr></thead>
+                  <tbody>
+                    <tr><td>货币资金</td><td>4,032,123.76</td><td>短期借款</td><td>150,000.00</td></tr>
+                    <tr><td>应收票据</td><td>525,790.00</td><td>应付票据</td><td>80,000.00</td></tr>
+                    <tr><td>应收账款</td><td>1,199,040.00</td><td>应付账款</td><td>706,653.00</td></tr>
+                    <tr><td>存货</td><td>3,356,256.16</td><td>应付职工薪酬</td><td>580,639.08</td></tr>
+                    <tr><td>固定资产</td><td>6,455,606.10</td><td>应交税费</td><td>720,007.34</td></tr>
+                    <tr><td>无形资产</td><td>1,624,350.00</td><td>长期借款</td><td>1,200,000.00</td></tr>
+                    <tr><td>非流动资产合计</td><td>9,633,746.10</td><td>所有者权益合计</td><td>15,731,747.72</td></tr>
+                    <tr class="total-row"><td>资产总计</td><td>19,183,179.22</td><td>负债和所有者权益总计</td><td>19,183,179.22</td></tr>
+                  </tbody>
+                </table>
+
+                <table class="financial-table" id="profitReport">
+                  <thead><tr><th>项目</th><th>本月金额</th><th>本年累计金额</th></tr></thead>
+                  <tbody>
+                    <tr><td>一、营业收入</td><td>2,059,160.00</td><td></td></tr>
+                    <tr><td>减：营业成本</td><td>1,290,562.19</td><td></td></tr>
+                    <tr><td>税金及附加</td><td>29,803.28</td><td></td></tr>
+                    <tr><td>销售费用</td><td>125,405.56</td><td></td></tr>
+                    <tr><td>管理费用</td><td>319,219.11</td><td></td></tr>
+                    <tr><td>财务费用</td><td>3,026.27</td><td></td></tr>
+                    <tr><td>二、营业利润</td><td>270,730.97</td><td></td></tr>
+                    <tr><td>三、利润总额</td><td>230,980.97</td><td></td></tr>
+                    <tr class="total-row"><td>四、净利润</td><td>-304,406.51</td><td></td></tr>
+                  </tbody>
+                </table>
+
+                <table class="financial-table" id="cashflowReport">
+                  <thead><tr><th>项目</th><th>本月金额</th><th>本年累计金额</th></tr></thead>
+                  <tbody>
+                    <tr><td>销售商品、提供劳务收到的现金</td><td>3,735,713.00</td><td></td></tr>
+                    <tr><td>经营活动现金流入小计</td><td>3,743,192.81</td><td></td></tr>
+                    <tr><td>购买商品、接受劳务支付的现金</td><td>701,329.39</td><td></td></tr>
+                    <tr><td>支付给职工以及为职工支付的现金</td><td>703,253.90</td><td></td></tr>
+                    <tr><td>支付的各项税费</td><td>320,035.74</td><td></td></tr>
+                    <tr><td>经营活动产生的现金流量净额</td><td>1,836,615.20</td><td></td></tr>
+                    <tr><td>投资活动产生的现金流量净额</td><td>-806,444.50</td><td></td></tr>
+                    <tr><td>筹资活动产生的现金流量净额</td><td>-379,100.00</td><td></td></tr>
+                    <tr class="total-row"><td>期末现金及现金等价物余额</td><td>5,216,484.26</td><td></td></tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <aside class="card logic-card">
+                <div class="section-title">
+                  <h3>报表数据来源说明</h3>
+                  <span>凭证到报表</span>
+                </div>
+                <p>系统根据已审核凭证自动汇总科目发生额，生成科目余额表，再按照报表项目映射规则形成资产负债表、利润表和现金流量表。报表生成后自动进行勾稽关系校验。</p>
+                <div class="reconcile-box">
+                  <h4>报表勾稽关系校验</h4>
+                  <p id="reconcileAssets"><span class="status-dot done">✓</span> 资产总计 = 负债和所有者权益总计</p>
+                  <p id="reconcileTrial"><span class="status-dot done">✓</span> 借方发生额 = 贷方发生额</p>
+                  <p id="reconcileProfit"><span class="status-dot done">✓</span> 利润表净利润 = 智能分析净利润来源</p>
+                  <p id="reconcileCash"><span class="status-dot done">✓</span> 现金流量表期末现金 = 资产负债表货币资金</p>
+                </div>
+              </aside>
+            </div>
+          </section>
+        </section>
+
+        <section class="page" id="analysis">
+          <section class="card indicator-card">
+            <div class="section-title">
+              <h3>关键财务指标</h3>
+              <span>结合北京明帆实训数据自动分析</span>
+            </div>
+            <div class="indicator-grid">
+              <div><span>资产负债率</span><strong>18.0%</strong><em class="pill low">低风险</em><p>负债水平较低，短期偿债基础较稳。</p></div>
+              <div><span>毛利率</span><strong>37.3%</strong><em class="pill low">低风险</em><p>收入对成本覆盖能力较好。</p></div>
+              <div><span>净利率</span><strong>-14.8%</strong><em class="pill high">高风险</em><p>所得税与期间费用导致净利润承压。</p></div>
+              <div><span>应收账款周转率</span><strong>1.72</strong><em class="pill mid">中风险</em><p>回款效率仍需通过信用管理改善。</p></div>
+              <div><span>存货周转率</span><strong>0.38</strong><em class="pill mid">中风险</em><p>材料和库存占用资金较多。</p></div>
+              <div><span>经营现金流净额</span><strong>1,836,615.20</strong><em class="pill low">低风险</em><p>经营活动具备现金流支撑。</p></div>
+            </div>
+          </section>
+          <div class="chart-grid">
+            <section class="card chart-card"><h3>营业收入趋势折线图</h3><canvas id="revenueChart"></canvas></section>
+            <section class="card chart-card"><h3>成本费用结构饼图</h3><canvas id="costChart"></canvas></section>
+            <section class="card chart-card"><h3>资产负债率仪表盘</h3><canvas id="debtChart"></canvas></section>
+            <section class="card chart-card"><h3>现金流入流出柱状图</h3><canvas id="cashChart"></canvas></section>
+            <section class="card chart-card wide"><h3>风险评分雷达图</h3><canvas id="riskChart"></canvas></section>
+          </div>
+
+          <section class="card control-card">
+            <div class="section-title">
+              <h3>内部控制建议</h3>
+              <span>基于风险雷达图输出</span>
+            </div>
+            <div class="value-list">
+              <span>完善岗位权限分离</span>
+              <span>强化附件上传完整性</span>
+              <span>建立现金流量项目自动匹配规则</span>
+              <span>对高风险凭证设置人工复核</span>
+              <span>规范期末结账流程</span>
+            </div>
+          </section>
+
+          <section class="card diagnosis-card">
+            <div class="section-title">
+              <h3>AI财务诊断报告</h3>
+              <span>自动生成</span>
+            </div>
+            <div class="diagnosis-grid">
+              <article><h4>盈利能力分析</h4><p>北京明帆本期营业收入能够覆盖主要营业成本，但期间费用和所得税费用对利润形成明显压力。系统建议持续跟踪销售费用、管理费用与收入增长的匹配关系，避免费用投入未能转化为有效收入。</p></article>
+              <article><h4>偿债能力分析</h4><p>企业资产规模大于负债规模，整体偿债基础较稳定。短期借款、应付账款和应交税费仍需按期监控，建议结合现金流预测设置付款预警，防止集中付款造成资金压力。</p></article>
+              <article><h4>营运能力分析</h4><p>应收账款和存货占用资金较多，说明企业在销售回款和库存周转方面仍有优化空间。建议对客户信用期限、存货验收入库和材料领用流程进行精细化管理。</p></article>
+              <article><h4>现金流分析</h4><p>经营活动现金流为正，说明主营业务具备一定造血能力；但投资活动和筹资活动现金流为负，反映企业存在资产购建和偿债支出。建议将大额采购、固定资产处置和借款还本纳入月度资金计划。</p></article>
+              <article><h4>风险预警</h4><p>当前主要风险集中在附件完整性、四单金额一致性、税额抵扣合规性和岗位权限控制。系统已通过四单匹配、凭证审核评分和角色权限限制降低错账、漏账与越权操作风险。</p></article>
+              <article><h4>改进建议</h4><p>建议企业完善电子附件归档规则，强制上传发票、银行回单、合同和报销单；同时维护会计科目与现金流量项目映射表，定期复核AI生成分录，提高财务信息系统的可靠性。</p></article>
+            </div>
+            <div class="button-row">
+              <button class="primary-btn" id="summaryBtn">一键生成小组报告摘要</button>
+            </div>
+          </section>
+        </section>
+
+        <section class="page" id="settings">
+          <section class="card settings-card">
+            <div class="section-title">
+              <h3>系统设置</h3>
+              <span id="rolePermissionText">当前角色：会计主管，可审核、过账与出具报表</span>
+            </div>
+            <div class="company-form">
+              <label>
+                <span>公司名称</span>
+                <input id="companyNameInput" type="text" value="北京明帆股份有限公司">
+              </label>
+              <label>
+                <span>会计期间</span>
+                <input id="periodInput" type="text" value="2022年12月">
+              </label>
+              <button class="primary-btn" id="saveSettingsBtn">保存设置</button>
+            </div>
+            <div class="settings-grid">
+              <div><span>岗位权限</span><strong>出纳签字、主管过账、会计结转、主管结账分离</strong></div>
+              <div><span>流程管控</span><strong>未签字/未过账禁止结转和结账</strong></div>
+              <div><span>系统参数</span><strong id="periodStatus">2022年12月会计期间已启用</strong></div>
+              <div><span>AI阈值</span><strong>风险评分高于 70 自动复核</strong></div>
+            </div>
+            <div class="role-matrix">
+              <div class="role-card"><strong>出纳</strong><span>上传银行回单、登记收付款、完成出纳签字</span></div>
+              <div class="role-card"><strong>会计</strong><span>生成分录、匹配现金流、完成损益结转</span></div>
+              <div class="role-card"><strong>会计主管</strong><span>审核凭证、过账、结账并生成财务报表</span></div>
+            </div>
+          </section>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <div class="toast" id="toast">处理中...</div>
+  <button class="ai-float" id="aiAssistantBtn">AI财务助手</button>
+  <div class="assistant-panel hidden" id="assistantPanel">
+    <div class="section-title">
+      <h3>AI财务助手</h3>
+      <button class="icon-button" id="assistantClose" aria-label="关闭">×</button>
+    </div>
+    <div class="assistant-dialog" id="assistantDialog">
+      <div class="assistant-message bot">你好，我是AI财务助手。你可以直接输入业务、科目、税额、现金流量或报表相关问题。</div>
+    </div>
+    <div class="assistant-input-row">
+      <input id="assistantInput" type="text" placeholder="请输入问题，例如：这笔运输费怎么做分录？">
+      <button class="primary-btn" id="assistantSend">发送</button>
+    </div>
+    <div class="assistant-questions">
+      <button>这笔业务为什么计入销售费用？</button>
+      <button>现金流量项目怎么选？</button>
+      <button>材料未入库为什么记材料采购？</button>
+      <button>固定资产清理怎么处理？</button>
+    </div>
+  </div>
+  <div class="modal-backdrop hidden" id="modalBackdrop">
+    <section class="modal">
+      <div class="section-title">
+        <h3 id="modalTitle">系统消息</h3>
+        <button class="icon-button" id="modalClose" aria-label="关闭">×</button>
+      </div>
+      <div id="modalBody"></div>
+    </section>
+  </div>
+  <script src="js/main.js?v=20260708-voucher-select-flow"></script>
+</body>
+</html>
